@@ -18,20 +18,19 @@ public class CityController {
     private CityService cityService;
 
     @GetMapping
-    public ResponseEntity<List<CityDTO>> findAll() {
-        List<CityDTO> list = cityService.findAll();
-        return ResponseEntity.ok().body(list);
+    public ResponseEntity<List<CityDTO>> findAll(){
+        return ResponseEntity.ok(cityService.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<CityDTO> insert(@RequestBody CityDTO dto) {
+    public ResponseEntity<CityDTO> insert(@RequestBody CityDTO dto){
         dto = cityService.insert(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.id()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         cityService.delete(id);
         return ResponseEntity.noContent().build();
     }
